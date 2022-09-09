@@ -1,0 +1,2 @@
+1. setting database (tabel2)
+2. trigger function

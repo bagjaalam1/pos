@@ -29,6 +29,7 @@ $set_penjualan$ LANGUAGE plpgsql;
 CREATE TRIGGER set_penjualan AFTER INSERT OR UPDATE OR DELETE ON detail_penjualan
     FOR EACH ROW EXECUTE FUNCTION update_penjualan();
 
+--
 
 --update total_harga
 CREATE FUNCTION update_harga() RETURNS trigger AS $set_total_harga$
@@ -38,7 +39,8 @@ CREATE FUNCTION update_harga() RETURNS trigger AS $set_total_harga$
     BEGIN
     SELECT harga_jual INTO harga_jual_barang FROM barang WHERE kode_barang = NEW.kode_barang;
     NEW.harga_jual := harga_jual_barang;
-    NEW.total_harga := NEW.qty * NEW.
+    NEW.total_harga := NEW.qty * harga_jual_barang;
+    RETURN NEW;
 
     END;
 $set_total_harga$ LANGUAGE plpgsql;
