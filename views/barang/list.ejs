@@ -1,0 +1,29 @@
+<%- include('../partials/header')%>
+
+<div class="container">
+    <table class="table table-stripped">
+        <thead>
+            <tr>
+                <th>Kode Barang</th>
+                <th>Nama Barang</th>
+                <th>Stok</th>
+                <th>Harga Beli</th>
+                <th>Harga Jual</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% rows.forEach((item, index) => { %>
+                <tr>
+                    <td><%= index + 1 %></td>
+                    <td><%= item.kode_barang %></td>
+                    <td><%= item.nama_barang %></td>
+                    <td><%= item.stok %></td>
+                    <td><%= item.harga_beli %></td>
+                    <td><%= item.harga_jual %></td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</div>
+
+<%- include('../partials/footer')%>
