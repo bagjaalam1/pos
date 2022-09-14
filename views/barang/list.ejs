@@ -4,6 +4,7 @@
     <table class="table table-stripped">
         <thead>
             <tr>
+                <th>No</th>
                 <th>Kode Barang</th>
                 <th>Nama Barang</th>
                 <th>Stok</th>
@@ -17,9 +18,9 @@
                     <td><%= index + 1 %></td>
                     <td><%= item.kode_barang %></td>
                     <td><%= item.nama_barang %></td>
-                    <td><%= item.stok %></td>
-                    <td><%= item.harga_beli %></td>
-                    <td><%= item.harga_jual %></td>
+                    <td class="right-position"><%= item.stok %></td>
+                    <td class="right-position"><%= currencyFormatter.format(item.harga_beli) %></td>
+                    <td class="right-position"><%= currencyFormatter.format(item.harga_jual) %></td>
                 </tr>
             <% }) %>
         </tbody>

@@ -2,8 +2,8 @@ module.exports = (app) => {
     const controller = require('../controllers/barang.controller');
     const router = require('express').Router();
 
-    router.get('/', controller.find);
+    router.get('/', controller.findBarang);
 
-    app.use('/', router)
+    app.use('/barang', router)
     return router;
 }

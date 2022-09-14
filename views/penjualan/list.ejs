@@ -1,0 +1,30 @@
+<%- include('../partials/header')%>
+
+<div class="container">
+    <table class="table table-stripped">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>No. Invoice</th>
+                <th>Tanggal</th>
+                <th>Total Harga</th>
+                <th>Total Bayar</th>
+                <th>Kembalian</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% rows.forEach((item, index) => { %>
+                <tr>
+                    <td><%= index + 1 %></td>
+                    <td><%= item.no_invoice %></td>
+                    <td><%= moment(item.tanggal).format('DD MMM YYYY HH:SS') %></td>
+                    <td class="right-position"><%= currencyFormatter.format(item.total_harga) %></td>
+                    <td class="right-position"><%= currencyFormatter.format(item.total_bayar) %></td>
+                    <td class="right-position"><%= currencyFormatter.format(item.kembalian) %></td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</div>
+
+<%- include('../partials/footer')%>
