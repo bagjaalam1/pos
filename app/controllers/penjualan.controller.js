@@ -6,8 +6,11 @@ const moment = require('moment')
 exports.findPenjualan = async (req, res, next) => {
     try {
         const { rows } = await db.query('SELECT * FROM penjualan');
+        const noInvoice = req.query.noInvoice || rows.length > 0 ? rows[0].no_invoice : ''
+        const details = await db.query('SELECT dp.*, b.nama_barang FROM detail_penjualan as dp LEFT JOIN barang as b on dp.kode_barang = b.kode_barang WHERE dp.no_invoice = $1 ORDER BY dp.id_detail', [noInvoice]);
         res.render('penjualan/list', {
             rows,
+            details: details.rows,
             currentPage: 'penjualan',
             currencyFormatter,
             moment

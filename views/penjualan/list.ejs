@@ -1,30 +1,83 @@
 <%- include('../partials/header')%>
 
-<div class="container">
-    <table class="table table-stripped">
-        <thead>
-            <tr>
-                <th>No</th>
-                <th>No. Invoice</th>
-                <th>Tanggal</th>
-                <th>Total Harga</th>
-                <th>Total Bayar</th>
-                <th>Kembalian</th>
-            </tr>
-        </thead>
-        <tbody>
-            <% rows.forEach((item, index) => { %>
+    <div class="card">
+        <div class="card-header">
+            <h1>Transaksi Penjualan</h1>
+        </div>
+        <table class="table table-stripped">
+            <thead>
                 <tr>
-                    <td><%= index + 1 %></td>
-                    <td><%= item.no_invoice %></td>
-                    <td><%= moment(item.tanggal).format('DD MMM YYYY HH:SS') %></td>
-                    <td class="right-position"><%= currencyFormatter.format(item.total_harga) %></td>
-                    <td class="right-position"><%= currencyFormatter.format(item.total_bayar) %></td>
-                    <td class="right-position"><%= currencyFormatter.format(item.kembalian) %></td>
+                    <th>No</th>
+                    <th>Kode Barang</th>
+                    <th>Nama Barang</th>
+                    <th>Qty</th>
+                    <th>Harga Jual</th>
+                    <th>Total Harga</th>
                 </tr>
-            <% }) %>
-        </tbody>
-    </table>
-</div>
+            </thead>
+            <tbody>
+                <% details.forEach((item, index)=> { %>
+                    <tr>
+                        <td>
+                            <%= index + 1 %>
+                        </td>
+                        <td>
+                            <%= item.kode_barang %>
+                        </td>
+                        <td>
+                            <%= item.nama_barang %>
+                        </td>
+                        <td class="right-position">
+                            <%= item.qty %>
+                        </td>
+                        <td class="right-position">
+                            <%= currencyFormatter.format(item.harga_jual) %>
+                        </td>
+                        <td class="right-position">
+                            <%= currencyFormatter.format(item.total_harga) %>
+                        </td>
+                    </tr>
+                    <% }) %>
+            </tbody>
+        </table>
+        <div class="card-body">
+            <table class="table table-stripped">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>No. Invoice</th>
+                        <th>Tanggal</th>
+                        <th>Total Harga</th>
+                        <th>Total Bayar</th>
+                        <th>Kembalian</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% rows.forEach((item, index)=> { %>
+                        <tr>
+                            <td>
+                                <%= index + 1 %>
+                            </td>
+                            <td>
+                                <%= item.no_invoice %>
+                            </td>
+                            <td>
+                                <%= moment(item.tanggal).format('DD MMM YYYY HH:SS') %>
+                            </td>
+                            <td class="right-position">
+                                <%= currencyFormatter.format(item.total_harga) %>
+                            </td>
+                            <td class="right-position">
+                                <%= currencyFormatter.format(item.total_bayar) %>
+                            </td>
+                            <td class="right-position">
+                                <%= currencyFormatter.format(item.kembalian) %>
+                            </td>
+                        </tr>
+                        <% }) %>
+                </tbody>
+            </table>
+        </div>
+    </div>
 
-<%- include('../partials/footer')%>
+    <%- include('../partials/footer')%>
