@@ -18,5 +18,14 @@ exports.findPenjualan = async (req, res, next) => {
     } catch (e) {
         res.send(e)
     }
+}
 
+exports.getAdd = (req, res, next) => {
+    try {
+        res.render('penjualan/add', {
+            currentPage: 'Add Transaction'
+        })     
+    } catch (e) {
+        res.send(e)
+    }
 }
