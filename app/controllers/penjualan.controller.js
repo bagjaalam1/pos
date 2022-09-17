@@ -20,11 +20,13 @@ exports.findPenjualan = async (req, res, next) => {
     }
 }
 
-exports.getAdd = (req, res, next) => {
+exports.getAdd = async (req, res, next) => {
     try {
+        const {rows} = await db.query('SELECT kode_barang, nama_barang FROM barang')
         res.render('penjualan/add', {
-            currentPage: 'Add Transaction'
-        })     
+            currentPage: 'Add Transaction',
+            barang: rows
+        })
     } catch (e) {
         res.send(e)
     }
