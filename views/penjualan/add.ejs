@@ -6,7 +6,7 @@
         </div>
 
         <div class="card-body">
-            <form class="row g-3">
+            <form id="start-form" class="row g-3">
                 <div class="col-md-6">
                     <label for="no_invoice" class="form-label">No. Invoice</label>
                     <input type="text" class="form-control" id="no_invoice" readonly>
@@ -85,7 +85,7 @@
             </tbody>
         </table>
         <div class="card-footer">
-            <form>
+            <form id="detail-form">
                 <div class="row mb-3">
                     <label for="total_harga" class="col-sm-2 col-form-label">Total Harga</label>
                     <div class="col-sm-10">
@@ -108,5 +108,22 @@
             </form>
         </div>
     </div>
+
+    <script>
+        let no_invoice = null;
+        $(document).ready(function(){
+            $('#detail-form').prop("disabled", true);
+            $('#start-form').submit(function(e){
+                e.preventDefault();
+                $.post('/penjualan/start').done(function(data){
+                    no_invoice = data.no_invoice
+                    $('#no_invoice').val(no_invoice)
+                    $('#tanggal').val(data.tanggal)
+                    $('#start-form').prop('disabled', true);
+                    $('#detail-form').prop('disabled', false);
+                })
+            })
+        })
+    </script>
 
     <%- include('../partials/footer')%>

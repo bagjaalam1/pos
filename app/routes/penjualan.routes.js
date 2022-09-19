@@ -4,6 +4,7 @@ module.exports = (app) => {
 
     router.get('/', controller.findPenjualan);
     router.get('/add', controller.getAdd);
+    router.post('/start', controller.start);
 
     app.use('/penjualan', router);
     return router;

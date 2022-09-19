@@ -31,3 +31,12 @@ exports.getAdd = async (req, res, next) => {
         res.send(e)
     }
 }
+
+exports.start = async (req, res, next) => {
+    try {
+        const {rows} = await db.query('INSERT INTO penjualan(total_harga) VALUES (0) RETURNING *')
+        res.json(rows[0]) //INVOICE
+    } catch (e) {
+        res.send(e)
+    }
+}
