@@ -13,6 +13,7 @@
                     <th>Total Harga</th>
                     <th>Total Bayar</th>
                     <th>Kembalian</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -35,6 +36,9 @@
                         </td>
                         <td class="right-position">
                             <%= currencyFormatter.format(item.kembalian) %>
+                        </td>
+                        <td>
+                            <a class="btn btn-success" href="/penjualan/show/<%= item.no_invoice%>">Show</a>
                         </td>
                     </tr>
                     <% }) %>

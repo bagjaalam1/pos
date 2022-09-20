@@ -1,0 +1,136 @@
+<%- include('../partials/header')%>
+
+    <div class="card">
+        <div class="card-header">
+            <h1>New Transaction</h1>
+        </div>
+
+        <div class="card-body">
+            <form id="start-form" class="row g-3">
+                <div class="col-md-6">
+                    <label for="no_invoice" class="form-label">No. Invoice</label>
+                    <input type="text" class="form-control" id="no_invoice" value="<%= penjualan.no_invoice %>" readonly>
+                </div>
+                <div class="col-md-6">
+                    <label for="tanggal" class="form-label">Waktu</label>
+                    <input type="text" class="form-control" id="tanggal" value="<%= moment(penjualan.tanggal).format('DD MMM YYYY HH:mm:ss') %>" readonly>
+                </div>
+            </form>
+        </div>
+        <hr>
+        <div class="card-body">
+            <form class="row g-3">
+                <div class="col-md-6">
+                    <label for="kode_barang" class="form-label">Kode Barang</label>
+                    <select name="kode_barang" id="kode_barang" class="form-control">
+                        <option value="" selected disabled hidden>Choose here</option>
+                        <%barang.forEach((item)=> { %>
+                            <option value="<%=item.kode_barang%>"><%= item.kode_barang + ' - ' + item.nama_barang%></option>
+                        <% }) %>
+                        
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label for="nama_barang" class="form-label">Nama Barang</label>
+                    <input type="text" class="form-control" id="nama_barang" readonly>
+                </div>
+                <div class="col-md-6">
+                    <label for="qty" class="form-label">Qty</label>
+                    <input type="text" class="form-control" id="qty" readonly>
+                </div>
+                <div class="col-md-6">
+                    <label for="total_harga_item" class="form-label">Total Harga</label>
+                    <input type="text" class="form-control" id="total_harga_item" readonly>
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary">Tambah</button>
+                </div>
+            </form>
+        </div>
+        <hr>
+        <table class="table table-stripped">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Kode Barang</th>
+                    <th>Nama Barang</th>
+                    <th>Qty</th>
+                    <th>Harga Jual</th>
+                    <th>Total Harga</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        index + 1
+                    </td>
+                    <td>
+                        item.kode_barang
+                    </td>
+                    <td>
+                        item.nama_barang
+                    </td>
+                    <td class="right-position">
+                        item.qty
+                    </td>
+                    <td class="right-position">
+                        currencyFormatter.format(item.harga_jual)
+                    </td>
+                    <td class="right-position">
+                        currencyFormatter.format(item.total_harga)
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="card-footer">
+            <form id="detail-form">
+                <div class="row mb-3">
+                    <label for="total_harga" class="col-sm-2 col-form-label">Total Harga</label>
+                    <div class="col-sm-10">
+                        <input type="email" class="form-control" id="total_harga" readonly>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="total_bayar" class="col-sm-2 col-form-label">Total Bayar</label>
+                    <div class="col-sm-10">
+                        <input type="email" class="form-control" id="total_bayar">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="kembalian" class="col-sm-2 col-form-label">Kembalian</label>
+                    <div class="col-sm-10">
+                        <input type="email" class="form-control" id="kembalian" readonly>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Selesai</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let no_invoice = '<%= penjualan.no_invoice %>';
+        $(document).ready(function(){
+            $('#kode_barang').change(function(){
+                const kode_barang = $(this).val()
+                $.get(`/penjualan/barang/${kode_barang}`).done(function(data){
+                    $('#nama_barang').val(data.nama_barang)
+                    $('#harga_jual').val(data.harga_jual)
+                    $('#qty').val(1)
+                    $('#total_harga_item').val(data.harga_jual)
+                })
+            })
+
+            $('#start-form').submit(function(e){
+                e.preventDefault();
+                $.post('/penjualan/start').done(function(data){
+                    no_invoice = data.no_invoice
+                    $('#no_invoice').val(no_invoice)
+                    $('#tanggal').val(data.tanggal)
+                    $('#start-form').prop('disabled', true);
+                    $('#detail-form').prop('disabled', false);
+                })
+            })
+        })
+    </script>
+
+    <%- include('../partials/footer')%>
