@@ -61,3 +61,12 @@ exports.addItem = async (req, res, next) => {
         res.send(e)
     }
 }
+
+exports.detailPenjualan = async (req, res, next) => {
+    try {
+        const {rows} = await db.query('SELECT dp.*, b.nama_barang FROM detail_penjualan as dp LEFT JOIN barang as b on dp.kode_barang = b.kode_barang WHERE dp.no_invoice = $1 ORDER BY dp.id_detail', [req.params.no_invoice]); 
+        res.json(rows)
+    } catch (e) {
+        res.send(e)
+    }
+}

@@ -7,6 +7,7 @@ module.exports = (app) => {
     router.get('/show/:no_invoice', controller.show);
     router.get('/barang/:kode_barang', controller.barang);
     router.post('/additem', controller.addItem);
+    router.get('/details/:no_invoice', controller.detailPenjualan);
 
     app.use('/penjualan', router);
     return router;
