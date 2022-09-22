@@ -55,7 +55,8 @@ exports.barang = async (req, res, next) => {
 
 exports.addItem = async (req, res, next) => {
     try {
-        const {rows} = await db.query('INSERT INTO detail_penjualan(no_invoice, kode_barang, qty) VALUES ($1, $2, $3) RETURNING *', [req.body.no_invoice, req.body.kode_barang, req.body.qty]) 
+        const detail = await db.query('INSERT INTO detail_penjualan(no_invoice, kode_barang, qty) VALUES ($1, $2, $3) RETURNING *', [req.body.no_invoice, req.body.kode_barang, req.body.qty])
+        const { rows } = await db.query('SELECT * FROM penjualan WHERE no_invoice = $1', [req.body.no_invoice])
         res.json(rows[0])
     } catch (e) {
         res.send(e)
